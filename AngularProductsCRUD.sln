@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AC6D6824-E51E-4293-91AF-8A004E17A06B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2833CFF1-70A1-40E8-8721-F29D56454CDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularProductsCRUD.Api", "src\AngularProductsCRUD.Api\AngularProductsCRUD.Api.csproj", "{B8D86AA3-B9D9-45F3-82B1-3D4DB2057B92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularProductsCRUD.Domain", "src\AngularProductsCRUD.Domain\AngularProductsCRUD.Domain.csproj", "{6E1A2354-195F-4845-A1D3-2B67A9E9415C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularProductsCRUD.Application", "src\AngularProductsCRUD.Application\AngularProductsCRUD.Application.csproj", "{162B1864-93CC-4FFE-9730-B50D77DA5FC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularProductsCRUD.Infrastructure", "src\AngularProductsCRUD.Infrastructure\AngularProductsCRUD.Infrastructure.csproj", "{22B7A676-31B9-4099-AD4A-81CB66BEAF2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B8D86AA3-B9D9-45F3-82B1-3D4DB2057B92} = {AC6D6824-E51E-4293-91AF-8A004E17A06B}
+		{6E1A2354-195F-4845-A1D3-2B67A9E9415C} = {AC6D6824-E51E-4293-91AF-8A004E17A06B}
+		{162B1864-93CC-4FFE-9730-B50D77DA5FC5} = {AC6D6824-E51E-4293-91AF-8A004E17A06B}
+		{22B7A676-31B9-4099-AD4A-81CB66BEAF2E} = {AC6D6824-E51E-4293-91AF-8A004E17A06B}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8D86AA3-B9D9-45F3-82B1-3D4DB2057B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D86AA3-B9D9-45F3-82B1-3D4DB2057B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D86AA3-B9D9-45F3-82B1-3D4DB2057B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D86AA3-B9D9-45F3-82B1-3D4DB2057B92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E1A2354-195F-4845-A1D3-2B67A9E9415C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E1A2354-195F-4845-A1D3-2B67A9E9415C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E1A2354-195F-4845-A1D3-2B67A9E9415C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E1A2354-195F-4845-A1D3-2B67A9E9415C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162B1864-93CC-4FFE-9730-B50D77DA5FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162B1864-93CC-4FFE-9730-B50D77DA5FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162B1864-93CC-4FFE-9730-B50D77DA5FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162B1864-93CC-4FFE-9730-B50D77DA5FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22B7A676-31B9-4099-AD4A-81CB66BEAF2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22B7A676-31B9-4099-AD4A-81CB66BEAF2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22B7A676-31B9-4099-AD4A-81CB66BEAF2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22B7A676-31B9-4099-AD4A-81CB66BEAF2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
