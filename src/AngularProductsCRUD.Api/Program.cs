@@ -1,3 +1,4 @@
+using AngularProductsCRUD.Application;
 using AngularProductsCRUD.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
+    builder.Services.AddApplication();
     builder.Services.AddInfrastructure();
 }
 
