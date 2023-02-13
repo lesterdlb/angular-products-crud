@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using AngularProductsCRUD.Application.Common.Behaviours;
+using FluentValidation;
 using Mapster;
 using MapsterMapper;
 using MediatR;
@@ -17,6 +19,11 @@ public static class DependencyInjection
         services.AddSingleton(config);
         services.AddScoped<IMapper, ServiceMapper>();
 
+        services.AddScoped(
+            typeof(IPipelineBehavior<,>),
+            typeof(ValidationBehaviour<,>));
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        
         return services;
     }
 }
