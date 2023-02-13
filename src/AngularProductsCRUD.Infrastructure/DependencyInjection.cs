@@ -12,6 +12,10 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseInMemoryDatabase("AngularCRUD"));
 
+        using var scope = services.BuildServiceProvider().CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        context.Database.EnsureCreated();
+        
         services.AddScoped(typeof(GenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IProductsRepository, ProductsRepository>();
         services.AddScoped<ICategoriesRepository, CategoriesRepository>();
