@@ -1,6 +1,8 @@
 ﻿using AngularProductsCRUD.Api.Controllers.Common;
 using AngularProductsCRUD.Application.Common.Dto.Products;
 using AngularProductsCRUD.Application.Products.Commands.CreateProduct;
+using AngularProductsCRUD.Application.Products.Commands.DeleteProduct;
+using AngularProductsCRUD.Application.Products.Commands.UpdateProduct;
 using AngularProductsCRUD.Application.Products.Queries.GetProduct;
 using AngularProductsCRUD.Application.Products.Queries.GetProducts;
 using MediatR;
@@ -39,5 +41,29 @@ public class ProductsController : ApiController
         return result.Match(
             id => CreatedAtActionResult(id, request, nameof(Get)),
             Problem);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Put(Guid id, ProductDto request)
+    {
+        var command = new UpdateProductCommand(id, request);
+        var result = await Mediator.Send(command);
+
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var command = new DeleteProductCommand(id);
+        var result = await Mediator.Send(command);
+
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
     }
 }
