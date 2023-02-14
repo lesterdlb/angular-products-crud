@@ -23,4 +23,8 @@ export class CategoriesService {
     addCategory(category: CategoryRequest): Observable<Category> {
         return this.http.post<Category>(this.apiUrl, category);
     }
+
+    editCategory(category: Category): Observable<Category> {
+        return this.http.put<Category>(`${this.apiUrl}/${category.id}`, category);
+    }
 }

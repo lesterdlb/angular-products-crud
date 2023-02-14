@@ -1,0 +1,36 @@
+<div class="container my-4">
+    <h1 class="mb-2">Edit Category</h1>
+
+    <form [formGroup]="categoryForm" novalidate (ngSubmit)="editCategory()">
+        <div class="mb-3">
+            <label for="name" class="form-label">Id</label>
+            <input
+                type="text"
+                class="form-control"
+                id="id"
+                readonly
+                formControlName="id">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name">
+        </div>
+        <div
+            *ngIf="categoryForm.controls['name'].invalid && (categoryForm.controls['name'].dirty || categoryForm.controls['name'].touched)"
+            class="alert alert-danger">
+            <div *ngIf="categoryForm.controls['name'].errors?.['required']">
+                Name is required.
+            </div>
+        </div>
+        <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="categoryForm.invalid">
+            Submit
+        </button>
+    </form>
+</div>
