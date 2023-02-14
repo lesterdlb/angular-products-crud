@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext
         : base(options)
     {
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Product>()
@@ -30,6 +30,13 @@ public class ApplicationDbContext : DbContext
             category1,
             category2,
             category3,
+        });
+
+        modelBuilder.Entity<Product>().HasData(new List<Product>
+        {
+            Product.Create("Product A", category3.Id, 100),
+            Product.Create("Product B", category1.Id, 200),
+            Product.Create("Product C", category2.Id, 300),
         });
     }
 }
