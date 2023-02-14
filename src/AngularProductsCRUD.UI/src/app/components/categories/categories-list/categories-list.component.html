@@ -1,0 +1,28 @@
+﻿<div class="container my-4">
+    <h1 class="mb-2">Categories</h1>
+
+    <table class="table" *ngIf="categories && categories.length > 0">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let category of categories">
+            <td>{{category.id}}</td>
+            <td>{{category.name}}</td>
+            <td>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p *ngIf="!categories || categories.length === 0">No Categories Found</p>
+
+    <div class="row">
+        <a class="btn btn-primary" routerLink="add">Add Category</a>
+    </div>
+</div>
+
+
