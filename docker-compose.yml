@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  angular-products-crud-api:
+    container_name: angular-products-crud-api
+    build:
+      context: .
+      dockerfile: ./docker/dotnet/Dockerfile
+    ports:
+      - '8081:80'
+    networks:
+      - network
+  
+  angular-products-crud-ui:
+    container_name: angular-products-crud-ui
+#    env_file: "src/AngularProductsCRUD.UI/.env"
+    build:
+      context: .
+      dockerfile: ./docker/angular/Dockerfile
+    
+    ports:
+      - '4200:80'
+    networks:
+      - network
+    depends_on:
+      - angular-products-crud-api
+
+networks:
+  network:
