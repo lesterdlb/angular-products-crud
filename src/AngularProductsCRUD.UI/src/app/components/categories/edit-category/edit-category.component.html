@@ -1,8 +1,16 @@
 <div class="container my-4">
     <h1 class="mb-2">Edit Category</h1>
 
+    <div
+        *ngIf="apiError && apiError !== ''"
+        class="alert alert-danger">
+        <div>
+            {{apiError}}
+        </div>
+    </div>
+
     <form [formGroup]="categoryForm" novalidate (ngSubmit)="editCategory()">
-        <div class="mb-3">
+        <div class="mb-2">
             <label for="name" class="form-label">Id</label>
             <input
                 type="text"
@@ -11,7 +19,7 @@
                 readonly
                 formControlName="id">
         </div>
-        <div class="mb-3">
+        <div class="mb-2">
             <label for="name" class="form-label">Name</label>
             <input
                 type="text"
@@ -28,9 +36,15 @@
         </div>
         <button
             type="submit"
-            class="btn btn-primary"
+            class="btn btn-primary me-2"
             [disabled]="categoryForm.invalid">
-            Submit
+            Save Changes
+        </button>
+        <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deleteCategory()">
+            Delete
         </button>
     </form>
 </div>

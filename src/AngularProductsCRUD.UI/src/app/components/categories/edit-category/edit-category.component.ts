@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CategoriesService} from '../../../services/categories.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Category} from '../../../models/category.model';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector: 'app-edit-category',
@@ -11,6 +12,7 @@ import {Category} from '../../../models/category.model';
 })
 export class EditCategoryComponent {
     categoryForm: FormGroup;
+    apiError: string = '';
 
     constructor(
         private categoriesService: CategoriesService,
@@ -52,6 +54,21 @@ export class EditCategoryComponent {
                 .subscribe({
                     next: (_) => this.router.navigate(['/categories']),
                     error: error => console.log(error)
+                });
+        }
+    }
+
+    deleteCategory(): void {
+        if (confirm("Are you sure you want to delete this category?")) {
+            this.categoriesService
+                .deleteCategory(this.categoryForm.value.id)
+                .subscribe({
+                    next: (_) => this.router.navigate(['/categories']),
+                    error: (error: HttpErrorResponse) => {
+                        Object.entries(error.error.errors).forEach(([_, value]) => {
+                            this.apiError = value as string;
+                        });
+                    }
                 });
         }
     }
