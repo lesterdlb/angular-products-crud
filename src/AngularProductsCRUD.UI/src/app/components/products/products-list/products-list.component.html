@@ -1,0 +1,33 @@
+<div class="container my-4">
+    <h1 class="mb-2">Products</h1>
+
+    <table class="table" *ngIf="products && products.length > 0">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let product of products">
+            <td>{{product.id}}</td>
+            <td>{{product.title}}</td>
+            <td>{{product.category}}</td>
+            <td>{{product.price}}</td>
+            <td>
+                <a class="btn btn-primary" routerLink="edit/{{product.id}}">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p *ngIf="!products || products.length === 0">No Products Found</p>
+
+    <div class="row">
+        <a class="btn btn-primary" routerLink="add">Add Product</a>
+    </div>
+</div>
+
+
