@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure();
 
+    builder.Services.AddHealthChecks();
+
     builder.Services.AddCors(options =>
     {
         options.AddPolicy(allowSpecificOrigins, policy =>
@@ -35,6 +37,8 @@ var app = builder.Build();
     app.UseHttpsRedirection();
     app.MapControllers();
 
+    app.UseHealthChecks("/healthcheck");
+    
     app.UseCors(allowSpecificOrigins);
 
     app.Run();

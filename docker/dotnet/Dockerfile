@@ -20,5 +20,7 @@ RUN dotnet publish "AngularProductsCRUD.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
+RUN apt-get update 
+RUN apt-get --yes install curl
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "AngularProductsCRUD.Api.dll"]
