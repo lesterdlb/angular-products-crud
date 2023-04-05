@@ -1,0 +1,22 @@
+<input
+    [formControl]="control"
+    [ngClass]="{
+        'is-invalid': control.touched && control.dirty && control.invalid,
+        'form-control-plaintext': isReadonly
+    }"
+    [placeholder]="placeholder"
+    [readonly]="isReadonly"
+    [type]="type"
+    class="form-control"
+/>
+<ng-container *ngIf="control.touched && control.dirty">
+    <div *ngIf="control.errors?.['required']" class="invalid-feedback">
+        Field is required
+    </div>
+    <div *ngIf="control.errors?.['minlength']" class="invalid-feedback">
+        Field must be at least {{ control.errors?.['minlength'].requiredLength }} characters long
+    </div>
+    <div *ngIf="control.errors?.['min']" class="invalid-feedback">
+        Field must be at least {{ control.errors?.['min'].min }}
+    </div>
+</ng-container>
