@@ -18,7 +18,7 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.categoriesService.getCategories().subscribe({
+        this.categoriesService.getAll().subscribe({
             next: (categories: Category[]) => {
                 this.categoriesList = categories;
             },

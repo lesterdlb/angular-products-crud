@@ -48,7 +48,7 @@ export class EditComponent implements OnInit {
     ngOnInit(): void {
         this.productForm = this.formBuilderService.createProductForm();
 
-        this.categoriesService.getCategories().subscribe({
+        this.categoriesService.getAll().subscribe({
             next: categories => this.categoriesList = categories,
             error: error => console.log(error)
         });
@@ -57,7 +57,7 @@ export class EditComponent implements OnInit {
             next: params => {
                 const id = params.get('id');
                 if (id) {
-                    this.productsService.getProduct(id).subscribe({
+                    this.productsService.get(id).subscribe({
                         next: product => this.productForm.setValue({...product}),
                         error: error => console.log(error)
                     });
@@ -70,7 +70,7 @@ export class EditComponent implements OnInit {
     editProduct(): void {
         if (this.productForm.valid) {
             this.productsService
-                .editProduct(this.productForm.value as Product)
+                .update(this.productForm.value.id, this.productForm.value as Product)
                 .subscribe({
                     next: (_) => this.router.navigate(['/products']),
                     error: (error: HttpErrorResponse) => {
@@ -85,7 +85,7 @@ export class EditComponent implements OnInit {
     deleteProduct(): void {
         if (confirm('Are you sure you want to delete this product?')) {
             this.productsService
-                .deleteProduct(this.productForm.value.id)
+                .delete(this.productForm.value.id)
                 .subscribe({
                     next: (_) => this.router.navigate(['/products']),
                     error: (error: HttpErrorResponse) => {

@@ -1,35 +1,16 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Product, ProductRequest} from '../models/product.model';
+import {BaseService} from './base.service';
 import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Product} from '../models/product.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ProductsService {
-    private readonly apiUrl = `${environment.apiBaseUrl}products`;
+export class ProductsService extends BaseService<Product> {
+    protected override readonly apiUrl = `${environment.apiBaseUrl}products`;
 
-    constructor(private http: HttpClient) {
-    }
-
-    getProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>(this.apiUrl);
-    }
-
-    getProduct(id: string): Observable<Product> {
-        return this.http.get<Product>(`${this.apiUrl}/${id}`);
-    }
-
-    addProduct(product: ProductRequest): Observable<Product> {
-        return this.http.post<Product>(this.apiUrl, product);
-    }
-
-    editProduct(product: Product): Observable<Product> {
-        return this.http.put<Product>(`${this.apiUrl}/${product.id}`, product);
-    }
-
-    deleteProduct(id: string): Observable<Product> {
-        return this.http.delete<Product>(`${this.apiUrl}/${id}`);
+    constructor(protected override http: HttpClient) {
+        super(http);
     }
 }

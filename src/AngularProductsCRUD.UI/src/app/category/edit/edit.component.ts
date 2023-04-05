@@ -36,7 +36,7 @@ export class EditComponent implements OnInit {
             next: params => {
                 const id = params.get('id');
                 if (id) {
-                    this.categoriesService.getCategory(id)
+                    this.categoriesService.get(id)
                         .subscribe({
                             next: category => {
                                 this.categoryForm = this.formBuilderService.createCategoryForm(category);
@@ -51,8 +51,9 @@ export class EditComponent implements OnInit {
 
     editCategory(): void {
         if (this.categoryForm.valid) {
+            const id = this.categoryForm.value.id;
             this.categoriesService
-                .editCategory(this.categoryForm.value as Category)
+                .update(id, this.categoryForm.value as Category)
                 .subscribe({
                     next: (_) => this.router.navigate(['/categories']),
                     error: error => console.log(error)
@@ -63,7 +64,7 @@ export class EditComponent implements OnInit {
     deleteCategory(): void {
         if (confirm('Are you sure you want to delete this category?')) {
             this.categoriesService
-                .deleteCategory(this.categoryForm.value.id)
+                .delete(this.categoryForm.value.id)
                 .subscribe({
                     next: (_) => this.router.navigate(['/categories']),
                     error: (error: HttpErrorResponse) => {

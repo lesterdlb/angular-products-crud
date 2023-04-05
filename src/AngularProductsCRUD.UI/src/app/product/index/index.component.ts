@@ -18,7 +18,7 @@ export class IndexComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.productsService.getProducts().subscribe({
+        this.productsService.getAll().subscribe({
             next: products => this.products = products,
             error: error => console.log(error)
         });

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CategoriesService} from '../../services/categories.service';
 import {Router} from '@angular/router';
-import {CategoryRequest} from '../../models/category.model';
+import {Category} from '../../models/category.model';
 import {FormBuilderService} from '../../services/form-builder.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class CreateComponent implements OnInit {
     addCategory(): void {
         if (this.categoryForm.valid) {
             this.categoriesService
-                .addCategory(this.categoryForm.value as CategoryRequest)
+                .create(this.categoryForm.value as Category)
                 .subscribe({
                     next: _ => this.router.navigate(['/categories']),
                     error: err => console.log(err)
