@@ -1,0 +1,51 @@
+<div class="container my-4">
+    <h1 class="mb-3">Edit Product</h1>
+
+    <!--    <div-->
+    <!--        *ngIf="apiError && apiError !== ''"-->
+    <!--        class="alert alert-danger">-->
+    <!--        <div>-->
+    <!--            {{apiError}}-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <form (ngSubmit)="editProduct()" [formGroup]="productForm">
+        <div class="mb-2">
+            <label class="form-label" for="id">Id</label>
+            <app-input [control]="id" [isReadonly]="true" id="id"/>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="title">Title</label>
+            <app-input [control]="title" id="title" placeholder="Enter Product Title"/>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="price">Price</label>
+            <app-input [control]="price" id="price" placeholder="Enter Price" type="number"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="category">Category</label>
+            <select
+                class="form-select"
+                formControlName="categoryId"
+                id="category">
+                <option
+                    *ngFor="let category of categories"
+                    [value]="category.id">
+                    {{category.name}}
+                </option>
+            </select>
+        </div>
+        <button
+            [disabled]="productForm.invalid"
+            class="btn btn-primary me-2"
+            type="submit"
+        >Save Changes
+        </button>
+        <button
+            (click)="deleteProduct()"
+            class="btn btn-danger"
+            type="button">
+            Delete
+        </button>
+    </form>
+</div>
