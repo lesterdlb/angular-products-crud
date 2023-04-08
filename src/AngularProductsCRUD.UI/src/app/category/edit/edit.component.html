@@ -1,14 +1,6 @@
 <div class="container my-4">
     <h1 class="mb-2">Edit Category</h1>
 
-    <!--    <div-->
-    <!--        *ngIf="apiError && apiError !== ''"-->
-    <!--        class="alert alert-danger">-->
-    <!--        <div>-->
-    <!--            {{apiError}}-->
-    <!--        </div>-->
-    <!--    </div>-->
-
     <form (ngSubmit)="editCategory()" [formGroup]="categoryForm" novalidate>
         <div class="mb-2">
             <label class="form-label" for="name">Id</label>

@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {CategoriesService} from '../../services/categories.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Category} from '../../models/category.model';
-import {HttpErrorResponse} from '@angular/common/http';
 import {FormControl, FormGroup} from '@angular/forms';
 import {FormBuilderService} from '../../services/form-builder.service';
+import {ErrorService} from '../../shared/services/error.service';
 
 @Component({
     selector: 'app-edit',
@@ -18,7 +18,8 @@ export class EditComponent implements OnInit {
         private formBuilderService: FormBuilderService,
         private categoriesService: CategoriesService,
         private router: Router,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private errorService: ErrorService) {
     }
 
     get id() {
@@ -67,10 +68,9 @@ export class EditComponent implements OnInit {
                 .delete(this.categoryForm.value.id)
                 .subscribe({
                     next: (_) => this.router.navigate(['/categories']),
-                    error: (error: HttpErrorResponse) => {
-                        Object.entries(error.error.errors).forEach(([_, value]) => {
-                            // this.apiError = value as string;
-                        });
+                    error: (error: string) => {
+                        this.errorService.setErrorMessage(error);
+                        this.router.navigate(['/categories']);
                     }
                 });
         }

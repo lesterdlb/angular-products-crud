@@ -9,6 +9,6 @@ public class DeleteCategoryValidator : AbstractValidator<DeleteCategoryCommand>
     {
         RuleFor(x => x.Id)
             .MustAsync(async (id, _) => await productsRepository.Get(p => p.CategoryId == id) == null)
-            .WithMessage("Can't delete category because it has products.");
+            .WithMessage("Can't delete category because it has related products");
     }
 }

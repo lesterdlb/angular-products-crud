@@ -42,14 +42,16 @@ export class BaseService<T> {
     }
 
     protected handleError(error: HttpErrorResponse) {
-        if (error.error instanceof ErrorEvent) {
-            console.error('An error occurred:', error.error.message);
-        } else {
-            console.error(
-                `Api error code ${error.status}, error: ${error.error}`);
-        }
-        return throwError(
-            () => new Error('Unknown error; please try again later.')
-        );
+        return throwError(() => {
+            switch (error.status) {
+                case 400:
+                    const errorResponse = error.error;
+                    return `${errorResponse.title}: ${errorResponse.errors.Id[0]}`;
+                case 500:
+                    return 'Internal server error';
+                default:
+                    return 'Unknown error; please try again later.';
+            }
+        });
     }
 }
