@@ -1,0 +1,20 @@
+<div [class.d-block]="show" [class.show]="show" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ title }}</h5>
+                <button (click)="close()" aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                        type="button"></button>
+            </div>
+            <div class="modal-body">
+                {{ message }}
+            </div>
+            <div class="modal-footer">
+                <button (click)="close()" class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel
+                </button>
+                <button (click)="onConfirm()" class="btn btn-danger" type="button">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div (click)="close()" *ngIf="show" class="modal-backdrop show"></div>
