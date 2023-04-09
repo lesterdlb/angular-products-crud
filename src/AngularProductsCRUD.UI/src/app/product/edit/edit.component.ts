@@ -5,8 +5,9 @@ import {CategoriesService} from '../../services/categories.service';
 import {ProductsService} from '../../services/products.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Product} from '../../models/product.model';
-import {HttpErrorResponse} from '@angular/common/http';
 import {FormBuilderService} from '../../services/form-builder.service';
+import {ErrorService} from '../../shared/services/error.service';
+import {tap} from 'rxjs';
 
 @Component({
     selector: 'app-edit',
@@ -22,7 +23,8 @@ export class EditComponent implements OnInit {
         private categoriesService: CategoriesService,
         private productsService: ProductsService,
         private route: ActivatedRoute,
-        private router: Router) {
+        private router: Router,
+        private errorService: ErrorService) {
     }
 
     get id() {
@@ -31,10 +33,6 @@ export class EditComponent implements OnInit {
 
     get title() {
         return this.productForm.get('title') as FormControl;
-    }
-
-    get categoryId() {
-        return this.productForm.get('categoryId') as FormControl;
     }
 
     get price() {
@@ -56,44 +54,34 @@ export class EditComponent implements OnInit {
         this.route.paramMap.subscribe({
             next: params => {
                 const id = params.get('id');
-                if (id) {
-                    this.productsService.get(id).subscribe({
-                        next: product => this.productForm.setValue({...product}),
-                        error: error => console.log(error)
-                    });
-                }
+                if (id) this.loadProduct(id);
+
             },
-            error: error => console.log(error)
+            error: (error: string) => this.errorService.setErrorMessage(error)
         });
     }
 
-    editProduct(): void {
+    public editProduct(): void {
         if (this.productForm.valid) {
+            const id = this.productForm.value.id;
             this.productsService
-                .update(this.productForm.value.id, this.productForm.value as Product)
-                .subscribe({
-                    next: (_) => this.router.navigate(['/products']),
-                    error: (error: HttpErrorResponse) => {
-                        Object.entries(error.error.errors).forEach(([_, value]) => {
-                            // this.apiError = value as string;
-                        });
-                    }
-                });
+                .update(id, this.productForm.value as Product)
+                .pipe(
+                    tap({
+                        next: _ => this.router.navigate(['/products']),
+                        error: (error: string) => this.errorService.setErrorMessage(error)
+                    }))
+                .subscribe();
         }
     }
 
-    deleteProduct(): void {
-        if (confirm('Are you sure you want to delete this product?')) {
-            this.productsService
-                .delete(this.productForm.value.id)
-                .subscribe({
-                    next: (_) => this.router.navigate(['/products']),
-                    error: (error: HttpErrorResponse) => {
-                        Object.entries(error.error.errors).forEach(([_, value]) => {
-                            // this.apiError = value as string;
-                        });
-                    }
-                });
-        }
+    private loadProduct(id: string): void {
+        this.productsService.get(id)
+            .subscribe({
+                next: product => {
+                    this.productForm = this.formBuilderService.createProductForm(product);
+                },
+                error: (error: string) => this.errorService.setErrorMessage(error)
+            });
     }
 }

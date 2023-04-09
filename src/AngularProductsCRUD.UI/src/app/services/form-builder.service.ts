@@ -24,7 +24,7 @@ export class FormBuilderService {
                 initialValue.title,
                 [Validators.required, Validators.minLength(3)]
             ),
-            categoryId: new FormControl(initialValue.categoryId),
+            categoryId: new FormControl(initialValue.categoryId, [Validators.required]),
             category: new FormControl(initialValue.category),
             price: new FormControl(
                 initialValue.price, [Validators.required, Validators.min(1)]

@@ -1,14 +1,6 @@
 <div class="container my-4">
     <h1 class="mb-3">Add New Product</h1>
 
-    <!--    <div-->
-    <!--        *ngIf="apiError && apiError !== ''"-->
-    <!--        class="alert alert-danger">-->
-    <!--        <div>-->
-    <!--            {{apiError}}-->
-    <!--        </div>-->
-    <!--    </div>-->
-
     <form (ngSubmit)="addProduct()" [formGroup]="productForm">
         <div class="mb-2">
             <label class="form-label" for="title">Title</label>

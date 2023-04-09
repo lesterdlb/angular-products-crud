@@ -1,7 +1,7 @@
 <div class="container my-4">
     <h1 class="mb-2">Products</h1>
 
-    <table *ngIf="Products && Products.length > 0" class="table">
+    <table *ngIf="products && products.length > 0" class="table">
         <thead>
         <tr>
             <th scope="col">Id</th>
@@ -12,22 +12,27 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let product of Products">
+        <tr *ngFor="let product of products">
             <td>{{product.id}}</td>
             <td>{{product.title}}</td>
             <td>{{product.category}}</td>
             <td>{{product.price}}</td>
             <td>
                 <a class="btn btn-primary" routerLink="/products/edit/{{product.id}}">Edit</a>
+                <a (click)="deleteProduct(product.id, confirmationModal)" class="mx-2 btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
-    <p *ngIf="!Products || Products.length === 0">No Products Found</p>
+    <p *ngIf="!products || products.length === 0">No Products Found</p>
 
     <div class="row">
         <a class="btn btn-primary" routerLink="/products/create">Add Product</a>
     </div>
 </div>
+
+<app-confirmation-modal #confirmationModal
+                        message="Are you sure you want to delete this product?"
+                        title="Delete Confirmation"/>
 
 

@@ -3,10 +3,11 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ProductsService} from '../../services/products.service';
 import {Product} from '../../models/product.model';
-import {HttpErrorResponse} from '@angular/common/http';
 import {Category} from '../../models/category.model';
 import {CategoriesService} from '../../services/categories.service';
 import {FormBuilderService} from '../../services/form-builder.service';
+import {ErrorService} from '../../shared/services/error.service';
+import {tap} from 'rxjs';
 
 @Component({
     selector: 'app-create',
@@ -21,7 +22,8 @@ export class CreateComponent implements OnInit {
         private formBuilderService: FormBuilderService,
         private productsService: ProductsService,
         private categoriesService: CategoriesService,
-        private router: Router) {
+        private router: Router,
+        private errorService: ErrorService) {
     }
 
     get title() {
@@ -41,7 +43,7 @@ export class CreateComponent implements OnInit {
 
         this.categoriesService.getAll().subscribe({
             next: categories => this.categoriesList = categories,
-            error: error => console.log(error)
+            error: (error: string) => this.errorService.setErrorMessage(error)
         });
     }
 
@@ -49,16 +51,12 @@ export class CreateComponent implements OnInit {
         if (this.productForm.valid) {
             this.productsService
                 .create(this.productForm.value as Product)
-                .subscribe({
-                    next: (_) => {
-                        return this.router.navigate(['/products']);
-                    },
-                    error: (error: HttpErrorResponse) => {
-                        Object.entries(error.error.errors).forEach(([_, value]) => {
-                            // this.apiError = value as string;
-                        });
-                    }
-                });
+                .pipe(
+                    tap({
+                        next: _ => this.router.navigate(['/products']),
+                        error: (error: string) => this.errorService.setErrorMessage(error)
+                    })
+                ).subscribe();
         }
     }
 }

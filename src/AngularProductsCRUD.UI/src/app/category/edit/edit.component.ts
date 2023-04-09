@@ -66,5 +66,4 @@ export class EditComponent implements OnInit {
                 error: (error: string) => this.errorService.setErrorMessage(error)
             });
     }
-
 }

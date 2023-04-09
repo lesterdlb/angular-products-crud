@@ -1,14 +1,6 @@
 <div class="container my-4">
     <h1 class="mb-3">Edit Product</h1>
 
-    <!--    <div-->
-    <!--        *ngIf="apiError && apiError !== ''"-->
-    <!--        class="alert alert-danger">-->
-    <!--        <div>-->
-    <!--            {{apiError}}-->
-    <!--        </div>-->
-    <!--    </div>-->
-
     <form (ngSubmit)="editProduct()" [formGroup]="productForm">
         <div class="mb-2">
             <label class="form-label" for="id">Id</label>
@@ -40,12 +32,6 @@
             class="btn btn-primary me-2"
             type="submit"
         >Save Changes
-        </button>
-        <button
-            (click)="deleteProduct()"
-            class="btn btn-danger"
-            type="button">
-            Delete
         </button>
     </form>
 </div>
