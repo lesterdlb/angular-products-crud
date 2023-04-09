@@ -19,6 +19,7 @@
             <td>{{category.name}}</td>
             <td>
                 <a class="btn btn-primary" routerLink="/categories/edit/{{category.id}}">Edit</a>
+                <a (click)="deleteCategory(category.id, confirmationModal)" class="mx-2 btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>
@@ -30,4 +31,6 @@
     </div>
 </div>
 
-
+<app-confirmation-modal #confirmationModal
+                        message="Are you sure you want to delete this category?"
+                        title="Delete Confirmation"/>

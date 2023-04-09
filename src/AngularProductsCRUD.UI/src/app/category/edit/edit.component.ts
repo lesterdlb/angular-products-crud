@@ -5,6 +5,7 @@ import {Category} from '../../models/category.model';
 import {FormControl, FormGroup} from '@angular/forms';
 import {FormBuilderService} from '../../services/form-builder.service';
 import {ErrorService} from '../../shared/services/error.service';
+import {tap} from 'rxjs';
 
 @Component({
     selector: 'app-edit',
@@ -32,47 +33,38 @@ export class EditComponent implements OnInit {
 
     ngOnInit(): void {
         this.categoryForm = this.formBuilderService.createCategoryForm();
-
         this.route.paramMap.subscribe({
             next: params => {
                 const id = params.get('id');
-                if (id) {
-                    this.categoriesService.get(id)
-                        .subscribe({
-                            next: category => {
-                                this.categoryForm = this.formBuilderService.createCategoryForm(category);
-                            },
-                            error: error => console.log(error)
-                        });
-                }
+                if (id) this.loadCategory(id);
+
             },
-            error: error => console.log(error)
+            error: (error: string) => this.errorService.setErrorMessage(error)
         });
     }
 
-    editCategory(): void {
+    public editCategory(): void {
         if (this.categoryForm.valid) {
             const id = this.categoryForm.value.id;
             this.categoriesService
                 .update(id, this.categoryForm.value as Category)
-                .subscribe({
-                    next: (_) => this.router.navigate(['/categories']),
-                    error: error => console.log(error)
-                });
+                .pipe(
+                    tap({
+                        next: _ => this.router.navigate(['/categories']),
+                        error: (error: string) => this.errorService.setErrorMessage(error)
+                    }))
+                .subscribe();
         }
     }
 
-    deleteCategory(): void {
-        if (confirm('Are you sure you want to delete this category?')) {
-            this.categoriesService
-                .delete(this.categoryForm.value.id)
-                .subscribe({
-                    next: (_) => this.router.navigate(['/categories']),
-                    error: (error: string) => {
-                        this.errorService.setErrorMessage(error);
-                        this.router.navigate(['/categories']);
-                    }
-                });
-        }
+    private loadCategory(id: string): void {
+        this.categoriesService.get(id)
+            .subscribe({
+                next: category => {
+                    this.categoryForm = this.formBuilderService.createCategoryForm(category);
+                },
+                error: (error: string) => this.errorService.setErrorMessage(error)
+            });
     }
+
 }

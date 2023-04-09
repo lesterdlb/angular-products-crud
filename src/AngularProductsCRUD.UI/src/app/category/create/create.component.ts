@@ -4,6 +4,8 @@ import {CategoriesService} from '../../services/categories.service';
 import {Router} from '@angular/router';
 import {Category} from '../../models/category.model';
 import {FormBuilderService} from '../../services/form-builder.service';
+import {ErrorService} from '../../shared/services/error.service';
+import {tap} from 'rxjs';
 
 @Component({
     selector: 'app-create',
@@ -16,7 +18,8 @@ export class CreateComponent implements OnInit {
     constructor(
         private formBuilderService: FormBuilderService,
         private categoriesService: CategoriesService,
-        private router: Router) {
+        private router: Router,
+        private errorService: ErrorService) {
     }
 
     get name() {
@@ -31,10 +34,12 @@ export class CreateComponent implements OnInit {
         if (this.categoryForm.valid) {
             this.categoriesService
                 .create(this.categoryForm.value as Category)
-                .subscribe({
-                    next: _ => this.router.navigate(['/categories']),
-                    error: err => console.log(err)
-                });
+                .pipe(
+                    tap({
+                        next: _ => this.router.navigate(['/categories']),
+                        error: (error: string) => this.errorService.setErrorMessage(error)
+                    })
+                ).subscribe();
         }
     }
 }
